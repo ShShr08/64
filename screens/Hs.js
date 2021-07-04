@@ -14,53 +14,44 @@ class Hs extends Component {
       definition : "",
     }
   }
-
-  getWord=(word)=>{
+  
+  getWord=async (word)=>{
     var searchKeyword=word.toLowerCase()
     var url = "https://rupinwhitehatjr.github.io/dictionary/"+searchKeyword+".json"
     //console.log(url)
-    return fetch(url)
-    .then((data)=>{
-      if(data.status===200)
-      {
-        return data.json()
-      }
-      else
-      {
-        return null
-      }
-    })
-    .then((response)=>{
-        //console.log(response)
+    const data = await fetch(url);
+    if (data.status === 200) {
+      return data.json();
+    }
 
-        var responseObject = response
-        //var word = responseObject.word
-        //var lexicalCategory = responseObject.results[0].lexicalEntries[0].lexicalCategory.text
-        if(responseObject)
-        {
-          var wordData = responseObject.definitions[0]
-          //console.log(responseObject.definitions[0])
-          var definition=wordData.description
-          var lexicalCategory=wordData.wordtype
-          //console.log(lexicalCategory)
-          this.setState({
-            "word" : this.state.text, 
-            "definition" :definition,
-            "lexicalCategory": lexicalCategory     
-            
-          })
-        }
-        else
-        {
-          this.setState({
-            "word" : this.state.text, 
-            "definition" :"Not Found",
-            
-          })
+    else {
+      return null;
+    }
+    const response = undefined;
+    //console.log(response)
+    var responseObject = response;
+    //var word = responseObject.word
+    //var lexicalCategory = responseObject.results[0].lexicalEntries[0].lexicalCategory.text
+    if (responseObject) {
+      var wordData = responseObject.definitions[0];
+      //console.log(responseObject.definitions[0])
+      var definition = wordData.description;
+      var lexicalCategory = wordData.wordtype;
+      //console.log(lexicalCategory)
+      this.setState({
+        "word": this.state.text,
+        "definition": definition,
+        "lexicalCategory": lexicalCategory
+      });
+    }
 
-        }
-    
-    })
+    else {
+      this.setState({
+        "word": this.state.text,
+        "definition": "Not Found",
+      });
+
+    }
   }
 
   render(){
